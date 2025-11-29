@@ -6,1046 +6,1057 @@
   <meta name="theme-color" content="#ff3b3b" />
   <title>Salesian League — Gestione</title>
   <style>
-    /* --- CSS VARIABLES & RESET --- */
-    :root{
-      --bg:#0b0b0d;
-      --card: rgba(255,255,255,0.06);
-      --glass: rgba(255,255,255,0.06);
-      --muted: rgba(255,255,255,0.75);
-      --text:#ffffff;
-      --accent:#ff3b3b;
-      --accent-2:#ff6b6b;
-      --glass-border: rgba(255,255,255,0.08);
-      --glow: 0 10px 60px rgba(255,59,59,0.14);
-      --radius:14px;
-      --max-width:1200px;
-      --btn-radius:12px;
-      --btn-padding:10px 14px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,#050507 0%,#081018 65%);color:var(--text);font-family:Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;}
-    .wrap{min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:18px;background:var(--bg)}
-    .app{width:100%;max-width:var(--max-width);display:grid;grid-template-columns:1fr;gap:14px}
+/* --- CSS VARIABLES & RESET --- */
+:root{
+  --bg:#0b0b0d;
+  --card: rgba(255,255,255,0.06);
+  --glass: rgba(255,255,255,0.06);
+  --muted: rgba(255,255,255,0.6);
+  --text:#ffffff;
+  --accent:#ff3b3b;
+  --accent-2:#ff6b6b;
+  --glass-border: rgba(255,255,255,0.08);
+  --glow: 0 10px 60px rgba(255,59,59,0.14);
+  --radius:14px;
+  --max-width:1200px;
+  --btn-radius:12px;
+  --btn-padding:10px 14px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:linear-gradient(180deg,#050507 0%,#081018 65%);color:var(--text);font-family:Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;}
+.wrap{min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:18px;background:var(--bg)}
+.app{width:100%;max-width:var(--max-width);display:grid;grid-template-columns:1fr;gap:14px}
 
-    /* --- HEADER --- */
-    header.appbar{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid var(--glass-border);backdrop-filter: blur(6px);box-shadow: var(--glow)}
-    .league-logo{width:86px;height:86px;border-radius:12px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,#ffffff10,var(--accent));border:1px solid rgba(255,255,255,0.04)}
-    .brand h1{margin:0;font-size:20px;letter-spacing:0.6px;font-weight:800}
+/* HEADER */
+header.appbar{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid var(--glass-border);backdrop-filter: blur(6px);box-shadow: var(--glow)}
+.league-logo{width:86px;height:86px;border-radius:12px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,#ffffff10,var(--accent));border:1px solid rgba(255,255,255,0.04)}
+.brand h1{margin:0;font-size:20px;letter-spacing:0.6px;font-weight:800}
 
-    /* --- BUTTONS --- */
-    .btn{
-      background:linear-gradient(180deg,var(--accent),var(--accent-2));
-      border:0;color:white;padding:var(--btn-padding);border-radius:var(--btn-radius);cursor:pointer;font-weight:700;box-shadow:0 10px 30px rgba(255,59,59,0.12);transition:transform .14s ease, box-shadow .14s;
-      display:inline-flex;align-items:center;gap:8px; text-decoration: none; font-size: 14px;
-    }
-    .btn:active{transform:translateY(1px)}
-    .btn.ghost{background:transparent;border:1px solid var(--glass-border);box-shadow:none;color:var(--text)}
-    .btn.small{padding:6px 10px;font-size:13px;border-radius:10px}
+/* BUTTONS */
+.btn{
+  background:linear-gradient(180deg,var(--accent),var(--accent-2));
+  border:0;color:white;padding:var(--btn-padding);border-radius:var(--btn-radius);cursor:pointer;font-weight:700;box-shadow:0 10px 30px rgba(255,59,59,0.12);transition:transform .14s ease, box-shadow .14s;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px; text-decoration: none;
+}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;border:1px solid var(--glass-border);box-shadow:none;color:var(--text)}
+.btn.small{padding:6px 8px;font-size:13px;border-radius:10px}
 
-    /* --- LAYOUT --- */
-    .main{display:grid;grid-template-columns:320px 1fr;gap:16px;margin-top:6px}
-    @media (max-width:980px){ .main{grid-template-columns:1fr} }
+/* LAYOUT */
+.main{display:grid;grid-template-columns:320px 1fr;gap:16px;margin-top:6px}
+@media (max-width:980px){ .main{grid-template-columns:1fr} }
 
-    aside.sidebar{padding:14px;border-radius:var(--radius);background:var(--card);border:1px solid var(--glass-border);min-height:320px}
-    .nav{display:flex;flex-direction:column;gap:8px;margin-top:8px}
-    .nav button{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:transparent;border:0;color:var(--muted);cursor:pointer;transition:all .18s;text-align:left;font-size:15px;font-weight:500}
-    .nav button:hover{background:rgba(255,255,255,0.03)}
-    .nav button.active{background:linear-gradient(90deg, rgba(255,59,59,0.08), rgba(255,59,59,0.03));color:var(--text);box-shadow:inset 0 1px 0 rgba(255,255,255,0.02);font-weight:700}
-    
-    .search{margin-top:12px;display:flex;gap:8px}
-    .search input{flex:1;padding:10px;border-radius:10px;background:transparent;border:1px solid var(--glass-border);color:var(--text);font-family:inherit}
+aside.sidebar{padding:14px;border-radius:var(--radius);background:var(--card);border:1px solid var(--glass-border);min-height:320px}
+.nav{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.nav button{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:transparent;border:0;color:var(--muted);cursor:pointer;transition:all .18s; text-align: left;}
+.nav button:hover{background:rgba(255,255,255,0.03);color:var(--text)}
+.nav button.active{background:linear-gradient(90deg, rgba(255,59,59,0.08), rgba(255,59,59,0.03));color:var(--text);box-shadow:inset 0 1px 0 rgba(255,255,255,0.02);font-weight:700}
+.search{margin-top:12px;display:flex;gap:8px}
+.search input{flex:1;padding:10px;border-radius:10px;background:transparent;border:1px solid var(--glass-border);color:var(--text)}
 
-    /* --- CONTENT --- */
-    section.content{padding:14px;border-radius:var(--radius);background:var(--card);border:1px solid var(--glass-border);min-height:480px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:12px}
+/* Filters */
+.role-wrap{margin-top:12px}
+.role-wrap select{width:100%;margin-top:6px;padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text)}
+.role-wrap select option {background:#111; color:white;}
 
-    /* --- PLAYER CARD --- */
-    .player{display:flex;align-items:center;padding:12px;border-radius:12px;background:linear-gradient(135deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.02);transition:transform .16s ease, box-shadow .16s ease;cursor:pointer;position:relative;overflow:hidden}
-    .player:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.4);background:linear-gradient(135deg, rgba(255,255,255,0.04), transparent)}
-    .avatar{width:64px;height:64px;border-radius:12px;display:grid;place-items:center;font-weight:700;font-size:20px;background:linear-gradient(135deg,#ffffff10,var(--accent));border:1px solid rgba(255,255,255,0.04);object-fit:cover;overflow:hidden;flex-shrink:0}
-    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
-    .p-meta{flex:1;padding-left:12px;min-width:0}
-    .p-meta b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .p-meta .muted{font-size:13px;color:var(--muted)}
-    .p-stats{display:flex;gap:8px;align-items:center}
-    .chip{padding:4px 8px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.03);font-weight:600;font-size:12px}
+/* CONTENT & GRID */
+section.content{padding:14px;border-radius:var(--radius);background:var(--card);border:1px solid var(--glass-border);min-height:480px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media (max-width:680px){ .grid{grid-template-columns:1fr} }
 
-    /* --- TABLE --- */
-    .table-wrap{overflow-x:auto;border-radius:8px}
-    table{width:100%;border-collapse:collapse;font-size:14px}
-    th,td{padding:12px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--muted)}
-    th{font-weight:700;color:var(--text);font-size:13px;background:rgba(255,255,255,0.02)}
-    tr:hover td{background:rgba(255,255,255,0.02)}
+/* PLAYER CARD */
+.player{display:flex;align-items:center;padding:12px;border-radius:12px;background:linear-gradient(135deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.02);transition:transform .16s ease, box-shadow .16s ease;cursor:pointer;position:relative}
+.player:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,0.6)}
+.avatar{width:64px;height:64px;border-radius:12px;display:grid;place-items:center;font-weight:700;font-size:20px;background:linear-gradient(135deg,#ffffff10,var(--accent));border:1px solid rgba(255,255,255,0.04);object-fit:cover;overflow:hidden;flex-shrink:0}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.p-meta{flex:1;padding-left:12px;min-width:0}
+.p-meta b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p-meta .muted{font-size:13px;color:var(--muted)}
 
-    /* --- MODAL --- */
-    .modal-back{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.85);backdrop-filter:blur(4px);z-index:120;padding:20px}
-    .modal{width:920px;max-width:100%;border-radius:14px;padding:24px;background:#0e0e12;border:1px solid rgba(255,255,255,0.1);box-shadow:0 30px 90px rgba(0,0,0,0.9);max-height:85vh;overflow-y:auto;position:relative;animation: modalUp 0.2s ease-out}
-    @keyframes modalUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-    
-    .modal .close-x{position:absolute;right:16px;top:16px;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;cursor:pointer;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.05);transition:background .2s}
-    .modal .close-x:hover{background:var(--accent);color:white}
-    
-    /* --- FORMS --- */
-    .row{display:flex;gap:10px;flex-wrap:wrap}
-    input,select,textarea{padding:10px;border-radius:10px;background:rgba(0,0,0,0.3);border:1px solid var(--glass-border);color:var(--text);font-family:inherit;width:100%}
-    input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset: -1px; border-color:transparent}
-    select option { background: #1a1a1f; color: #fff; } /* Fix dropdown visibility */
-    
-    .kv{font-weight:700;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;display:block}
-    .small-muted{font-size:13px;color:var(--muted)}
-    .muted-small{font-size:12px;color:rgba(255,255,255,0.5)}
-    
-    .event-row{display:grid;grid-template-columns:60px 100px 100px 1fr 1fr 60px;gap:8px;align-items:center;margin-bottom:8px;padding:8px;background:rgba(255,255,255,0.02);border-radius:8px}
-    @media(max-width:700px){ .event-row{display:flex;flex-direction:column;align-items:stretch} .event-row input, .event-row select{width:100%} }
+/* MATCH TABLE */
+.table-wrap{overflow:auto;border-radius:8px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+th{font-weight:700;color:var(--muted);font-size:13px}
+tr:hover td{background:linear-gradient(90deg, rgba(255,255,255,0.01), transparent)}
 
-    .logo-thumb{width:32px;height:32px;border-radius:6px;object-fit:cover;border:1px solid rgba(255,255,255,0.1)}
-    
-    .view{display:none} /* Managed by JS */
-    .view.active-view{display:block;animation:fadeIn 0.2s}
-    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+/* MODAL */
+.modal-back{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.85);z-index:120;padding:20px;backdrop-filter:blur(4px)}
+.modal{width:920px;max-width:100%;border-radius:14px;padding:20px;background:#131316;border:1px solid rgba(255,255,255,0.1);box-shadow:0 30px 90px rgba(0,0,0,0.9);max-height:85vh;overflow:auto;position:relative}
+.modal .close-x{position:absolute;right:12px;top:12px;width:36px;height:36px;border-radius:8px;display:grid;place-items:center;cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,0.04);z-index:10}
+.modal .close-x:hover{background:rgba(255,255,255,0.02);color:white}
 
-    /* Ranking Item */
-    .rank-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:8px;background:rgba(255,255,255,0.03);margin-bottom:6px;border:1px solid rgba(255,255,255,0.02)}
-    .rank-val{font-weight:800;color:var(--accent)}
+/* FORMS */
+form.row{display:flex;gap:10px;flex-wrap:wrap}
+input,select,textarea{padding:10px;border-radius:10px;background:rgba(0,0,0,0.3) !important;border:1px solid var(--glass-border) !important;color:var(--text) !important;min-width:0;width:100%}
+select option { background: #111; }
+.kv{font-weight:700;color:var(--muted);font-size:12px;text-transform:uppercase;margin-top:10px;display:block;margin-bottom:4px}
+.event-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;background:rgba(255,255,255,0.02);padding:6px;border-radius:8px}
+.event-row input, .event-row select{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);margin:0}
+.logo-thumb{width:40px;height:40px;border-radius:6px;object-fit:cover;border:1px solid rgba(255,255,255,0.1);background:#000}
 
+/* Optimized Inputs */
+.ev-min {
+    width: 80px !important;
+    text-align: center;
+    font-size: 18px !important;
+    font-weight: bold;
+    padding: 12px !important;
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid var(--accent) !important;
+    color: white !important;
+    -moz-appearance: textfield; /* Firefox remove spinner */
+}
+.ev-min::-webkit-outer-spin-button,
+.ev-min::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* TIMELINE (Chat Style) */
+.timeline-container { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.timeline-row { display: flex; align-items: center; width: 100%; }
+.timeline-row.left { justify-content: flex-start; }
+.timeline-row.right { justify-content: flex-end; }
+.timeline-event { 
+    background: rgba(255,255,255,0.03); 
+    border: 1px solid rgba(255,255,255,0.05); 
+    padding: 8px 12px; 
+    border-radius: 10px; 
+    max-width: 60%;
+    position: relative;
+}
+.timeline-row.left .timeline-event { border-left: 3px solid var(--accent); border-top-left-radius: 0; }
+.timeline-row.right .timeline-event { border-right: 3px solid #4a90e2; border-top-right-radius: 0; text-align: right; }
+.timeline-minute { 
+    font-size: 11px; color: var(--muted); font-weight: bold; margin-bottom: 2px;
+}
+
+/* MATCH HISTORY LIST */
+.match-history-item {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.03);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.match-history-item:hover { background: rgba(255,255,255,0.05); }
+
+/* RANKINGS PODIUM */
+.rank-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);border-radius:12px;padding:12px}
+.podium-item{display:flex;align-items:center;gap:10px;padding:8px;margin-bottom:4px;border-radius:8px;background:rgba(255,255,255,0.01)}
+.podium-item.p-1{background:linear-gradient(90deg, rgba(255,215,0,0.1), transparent);border-left:3px solid gold}
+.podium-item.p-2{background:linear-gradient(90deg, rgba(192,192,192,0.1), transparent);border-left:3px solid silver}
+.podium-item.p-3{background:linear-gradient(90deg, rgba(205,127,50,0.1), transparent);border-left:3px solid #cd7f32}
+.rank-avatar{width:36px;height:36px;border-radius:8px;object-fit:cover;background:#333}
+.hidden-list{display:none}
+
+/* GENERAL UTILS */
+.muted-small{font-size:12px;color:rgba(255,255,255,0.5)}
+.hover-glow:hover{box-shadow:0 12px 40px rgba(255,59,59,0.12);transform:translateY(-4px)}
+button:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px}
+
+@media(max-width:700px){
+  .event-row{flex-wrap:wrap}
+  .event-row input, .event-row select{width:100%}
+  .ev-min{width:100% !important}
+}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="app">
-      
-      <!-- HEADER -->
+      <!-- Top -->
       <header class="appbar">
         <div id="leagueLogoWrap"></div>
         <div class="brand"><h1 id="leagueTitle">SALESIAN LEAGUE</h1></div>
       </header>
 
+      <!-- Main -->
       <div class="main">
-        <!-- SIDEBAR -->
+        <!-- Sidebar -->
         <aside class="sidebar">
-          <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--glass-border);margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
             <div class="small-muted">Menu</div>
             <div class="muted-small">Pin: <span id="pinLabel">****</span></div>
           </div>
-
           <nav class="nav" id="nav">
-            <button class="active" data-view="players">👥 Giocatori</button>
-            <button data-view="matches">⚽ Partite</button>
-            <button data-view="calendar">📅 Calendario</button>
-            <button data-view="rankings">🏆 Classifiche</button>
-            <button data-view="admin">⚙️ Admin</button>
+            <button class="active" data-view="players" onclick="app.showView('players')">👥 Giocatori</button>
+            <button data-view="matches" onclick="app.showView('matches')">⚽ Partite</button>
+            <button data-view="calendar" onclick="app.showView('calendar')">📅 Calendario</button>
+            <button data-view="rankings" onclick="app.showView('rankings')">🏆 Classifiche</button>
+            <button data-view="admin" onclick="app.showView('admin')">⚙️ Admin</button>
           </nav>
-
-          <div style="margin-top:20px">
-            <label class="kv">Cerca</label>
-            <div class="search">
-              <input id="search" placeholder="Nome o Data (es. 27/11/2025)" />
-            </div>
+          <div class="search">
+            <input id="search" placeholder="Cerca..." oninput="app.renderPlayers(this.value)" />
+            <button id="importBtn" class="btn ghost small" title="Importa JSON" onclick="window.triggerImport()">📥</button>
           </div>
-
-          <div style="margin-top:16px">
+          <div class="role-wrap">
             <label class="kv">Filtra Ruolo</label>
-            <select id="roleFilter" style="margin-top:6px"><option value="">Tutti</option></select>
-          </div>
-          
-          <div style="margin-top:16px; display:flex; gap:8px;">
-             <button id="importBtn" class="btn ghost small" style="flex:1">Importa JSON</button>
+            <select id="roleFilter" onchange="app.renderPlayers()"><option value="">Tutti</option></select>
           </div>
         </aside>
 
-        <!-- MAIN CONTENT AREA -->
+        <!-- Content -->
         <section class="content" id="mainContent">
           
-          <!-- PLAYERS VIEW -->
-          <div id="viewPlayers" class="view active-view">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-              <div>
-                <h2 style="margin:0">Giocatori</h2>
-                <div class="muted-small">Gestione rosa e statistiche</div>
-              </div>
-              <div style="display:flex;gap:12px;align-items:center">
-                <span class="muted-small">Tot: <span id="totalPlayers">0</span></span>
-                <button id="addPlayerBtnTop" class="btn small">+ Nuovo</button>
+          <!-- Players View -->
+          <div id="viewPlayers" class="view">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <div><h2 style="margin:0">Giocatori</h2><div class="muted-small">Rosa completa</div></div>
+              <div style="display:flex;gap:10px;align-items:center">
+                <div class="muted-small">Tot: <span id="totalPlayers">0</span></div>
+                <button class="btn small" onclick="window.openAddPlayer()">+ Nuovo</button>
               </div>
             </div>
             <div class="grid" id="playersGrid"></div>
           </div>
 
-          <!-- MATCHES VIEW -->
-          <div id="viewMatches" class="view">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-              <div>
-                <h2 style="margin:0">Partite</h2>
-                <div class="muted-small">Storico risultati e tabellini</div>
-              </div>
-              <button id="newMatchBtn" class="btn small">+ Partita</button>
+          <!-- Matches View -->
+          <div id="viewMatches" class="view" style="display:none">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <div><h2 style="margin:0">Partite</h2><div class="muted-small">Risultati e Cronaca</div></div>
+              <button class="btn small" onclick="window.openAddMatch()">+ Partita</button>
             </div>
             <div class="table-wrap">
-              <table>
-                <thead><tr><th>Data</th><th>Match</th><th>Risultato</th><th style="text-align:right">Azioni</th></tr></thead>
+              <table style="width:100%">
+                <thead><tr><th>Data</th><th>Match</th><th>Risultato</th><th>Azioni</th></tr></thead>
                 <tbody id="matchesTable"></tbody>
               </table>
             </div>
           </div>
 
-          <!-- CALENDAR VIEW -->
-          <div id="viewCalendar" class="view">
-            <h2 style="margin-bottom:16px">Calendario</h2>
-            <div id="calendarList" style="display:grid;gap:10px"></div>
+          <!-- Calendar View -->
+          <div id="viewCalendar" class="view" style="display:none">
+            <h2>Calendario</h2>
+            <div id="calendarList"></div>
           </div>
 
-          <!-- RANKINGS VIEW -->
-          <div id="viewRankings" class="view">
-            <h2 style="margin-bottom:16px">Classifiche</h2>
-            <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(250px, 1fr))">
-              <div style="padding:14px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04)">
-                <h4 style="margin-top:0;color:var(--accent)">⚽ Top Marcatori</h4>
-                <div id="rankingGoals"></div>
-              </div>
-              <div style="padding:14px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04)">
-                <h4 style="margin-top:0;color:var(--accent)">👟 Top Assist</h4>
-                <div id="rankingAssists"></div>
-              </div>
-              <div style="padding:14px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04)">
-                <h4 style="margin-top:0;color:var(--accent)">⭐ MVP</h4>
-                <div id="rankingMvp"></div>
-              </div>
+          <!-- Rankings View -->
+          <div id="viewRankings" class="view" style="display:none">
+            <h2 style="margin-bottom:4px">Classifiche</h2>
+            <div class="muted-small" style="margin-bottom:16px">Top 3 in evidenza</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:12px">
+              <div class="rank-card"><h3>⚽ Goal</h3><div id="rankGoals"></div></div>
+              <div class="rank-card"><h3>🏆 Partite Vinte</h3><div id="rankWins"></div></div>
+              <div class="rank-card"><h3>⭐ MVP</h3><div id="rankMvps"></div></div>
             </div>
           </div>
 
-          <!-- ADMIN VIEW -->
-          <div id="viewAdmin" class="view">
-             <!-- Rendered via JS -->
-          </div>
+          <!-- Admin View -->
+          <div id="viewAdmin" class="view" style="display:none"></div>
 
         </section>
       </div>
     </div>
   </div>
 
-  <!-- MODAL CONTAINER -->
-  <div id="modal" class="modal-back" role="dialog" aria-hidden="true">
+  <!-- Modal -->
+  <div id="modal" class="modal-back">
     <div class="modal" id="modalContent"></div>
   </div>
 
-  <!-- LOGIC -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, onValue, set, push, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
 
-    // --- CONFIG ---
-    const firebaseConfig = {
-      apiKey: "AIzaSyAe8cq6R5XUMV_GyQakNjc5YAPl17DUyE4",
-      authDomain: "salesian-league.firebaseapp.com",
-      databaseURL: "https://salesian-league-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "salesian-league",
-      storageBucket: "salesian-league.firebasestorage.app",
-      messagingSenderId: "9508166370",
-      appId: "1:9508166370:web:d49e96a8c1d08ff8a09cbb"
-    };
+  const LS_KEY = 'salesian_db_ultra_v1';
+  const DEFAULT_PIN = '2209'; 
+  
+  let db = {
+    players: [],
+    matches: [],
+    meta: { leagueTitle: 'SALESIAN LEAGUE', leagueLogo: '' },
+    admin: { pin: DEFAULT_PIN }
+  };
+  let adminMode = false;
+  // This helps us "go back" to player when closing a match opened from player profile
+  let returnToPlayerId = null; 
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
+  // --- IO SYSTEM ---
+  function loadDB(){
+    const s = localStorage.getItem(LS_KEY);
+    if(s) {
+      try {
+        const parsed = JSON.parse(s);
+        db = { ...db, ...parsed }; 
+        if(!db.admin) db.admin = { pin: DEFAULT_PIN };
+      } catch(e){ console.error(e); }
+    } else {
+      seed();
+    }
+  }
+  function saveDB(){ localStorage.setItem(LS_KEY, JSON.stringify(db)); }
+  function seed(){
+    const roles = ['Portiere','Difensore','Centrocampista','Attaccante'];
+    for(let i=1; i<=10; i++){
+      db.players.push({
+        id: 'p_'+Math.random().toString(36).substr(2,9),
+        firstName: 'Nome'+i, lastName: 'Cognome'+i, 
+        birthYear: 2000, position: roles[i%4], 
+        ratings: {tec:6, fis:6, vel:6}, photo: ''
+      });
+    }
+    saveDB();
+  }
 
-    // --- STATE ---
-    let playersCache = [];
-    let matchesCache = [];
-    let metaCache = {};
-    let adminCache = { pin: '2209' };
+  // --- UTILS ---
+  const uid = () => Math.random().toString(36).substr(2,9);
+  const escape = (s) => s ? String(s).replace(/[&<>"']/g, '') : '';
+  const readFlo = (f) => new Promise(r => { 
+     if(!f) r(null); 
+     const rd=new FileReader(); 
+     rd.onload=e=>r(e.target.result); 
+     rd.readAsDataURL(f); 
+  });
+
+  // --- CORE LOGIC ---
+  function getMatchScore(m){
+    let s = [0,0];
+    (m.events||[]).forEach(ev => {
+      if(ev.type === 'goal' || ev.type === 'penalty'){
+        if(typeof ev.teamIndex === 'number') s[ev.teamIndex]++;
+      } else if (ev.type === 'own') {
+        const otherTeam = ev.teamIndex === 0 ? 1 : 0;
+        s[otherTeam]++;
+      }
+    });
+    return s;
+  }
+
+  function getPlayerStats(pid){
+    let goals=0, played=0, wins=0, mvps=0;
     
-    // Global admin state (mirrored on window for UI access)
-    window.adminMode = false;
-    const DEFAULT_ADMIN_PIN = '2209';
-
-    // --- DB REFS ---
-    const pRef = ref(db, 'players');
-    const mRef = ref(db, 'matches');
-    const metaRef = ref(db, 'meta/league');
-    const admRef = ref(db, 'admin');
-    const logRef = ref(db, 'adminLogs');
-
-    // --- SYNC ---
-    onValue(pRef, snap => {
-      const val = snap.val() || {};
-      playersCache = Object.keys(val).map(k => ({id:k, ...val[k]}));
-      // Sort alphabetically
-      playersCache.sort((a,b)=>(a.lastName||'').localeCompare(b.lastName||''));
-      renderCurrentView();
-    });
-
-    onValue(mRef, snap => {
-      const val = snap.val() || {};
-      matchesCache = Object.keys(val).map(k => ({id:k, ...val[k]}));
-      // Sort by date desc
-      matchesCache.sort((a,b)=> new Date(b.date) - new Date(a.date));
-      renderCurrentView();
-    });
-
-    onValue(metaRef, snap => {
-      metaCache = snap.val() || {};
-      renderLeagueMeta();
-    });
-
-    onValue(admRef, snap => {
-      adminCache = snap.val() || { pin: DEFAULT_ADMIN_PIN };
-      updateAdminUI();
-    });
-
-    // --- HELPERS (Exported to window for old-style inline calls) ---
-    window.loadPlayers = () => playersCache;
-    window.loadMatches = () => matchesCache;
-    window.getAdmin = () => adminCache;
-    window.getMeta = () => metaCache;
-
-    window.savePlayers = async (arr) => {
-      const obj = {}; arr.forEach(p=>obj[p.id]=p);
-      await set(pRef, obj);
-    };
-    window.saveMatches = async (arr) => {
-      const obj = {}; arr.forEach(m=>obj[m.id]=m);
-      await set(mRef, obj);
-    };
-    window.saveMeta = async (m) => await set(metaRef, m);
-    window.saveAdmin = async (a) => await set(admRef, a);
-    
-    window.writeLog = (action, details) => {
-      push(logRef, { action, details, ts: new Date().toISOString() });
-    };
-
-    // --- SEEDING ---
-    async function seed() {
-      const s = await get(pRef);
-      if(!s.exists()) {
-        console.log("Seeding DB...");
-        const demo = {};
-        for(let i=1;i<=5;i++) {
-          const id = 'p_'+Math.random().toString(36).substr(2,9);
-          demo[id] = { id, firstName:'Giocatore', lastName:i, position:'Attaccante', birthYear:2000, mvpCount:0 };
-        }
-        await set(pRef, demo);
-        await set(admRef, { pin: '2209' });
-      }
-    }
-    seed();
-
-    // Trigger main UI init
-    document.dispatchEvent(new Event('app-ready'));
-  </script>
-
-  <script>
-    // --- MAIN UI LOGIC ---
-    document.addEventListener('app-ready', () => {
-       initApp();
-    });
-    // Fallback if event fires before listener
-    if(document.readyState === 'complete') initApp();
-    else document.addEventListener('DOMContentLoaded', () => { /* wait for module */ });
-
-    function initApp(){
-      if(window.appInitialized) return;
-      window.appInitialized = true;
-
-      // Refs
-      const nav = document.getElementById('nav');
-      const search = document.getElementById('search');
-      const roleFilter = document.getElementById('roleFilter');
-      const pinLabel = document.getElementById('pinLabel');
-
-      // --- NAVIGATION ---
-      window.currentView = 'players';
-      
-      nav.addEventListener('click', e => {
-        if(e.target.tagName === 'BUTTON') {
-          // Update active btn
-          nav.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-          e.target.classList.add('active');
-          
-          // Switch view
-          document.querySelectorAll('.view').forEach(v => {
-            v.classList.remove('active-view');
-            v.style.display = 'none';
-          });
-          const viewName = e.target.dataset.view;
-          window.currentView = viewName;
-          const target = document.getElementById('view'+capitalize(viewName));
-          if(target) {
-            target.style.display = 'block';
-            target.classList.add('active-view');
-          }
-          renderCurrentView();
+    db.matches.forEach(m => {
+      let teamIdx = -1;
+      m.formations.forEach((f, idx) => {
+        if(f.players.some(p => p.playerId === pid)) {
+          played++;
+          teamIdx = idx;
         }
       });
 
-      // --- SEARCH & FILTER ---
-      search.addEventListener('input', () => {
-        if(window.currentView === 'players') renderPlayers();
-        else if(window.currentView === 'matches') {
-           // Simple date highlighting for matches
-           renderMatches();
-        }
+      (m.events||[]).forEach(ev => {
+        if(ev.playerId === pid && (ev.type === 'goal' || ev.type === 'penalty')) goals++;
       });
-      roleFilter.addEventListener('change', renderPlayers);
 
-      // --- INITIAL RENDER ---
-      renderLeagueMeta();
-      updateAdminUI(); // Sets pin label
-    }
+      if(m.mvpPlayerId === pid) mvps++;
 
-    // --- RENDER ROUTER ---
-    window.renderCurrentView = function() {
-      if(window.currentView === 'players') renderPlayers();
-      if(window.currentView === 'matches') renderMatches();
-      if(window.currentView === 'calendar') renderCalendar();
-      if(window.currentView === 'rankings') renderRankings();
-      if(window.currentView === 'admin') renderAdmin();
-    }
-
-    function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1)}
-
-    // --- LEAGUE META ---
-    window.renderLeagueMeta = function() {
-      const meta = window.getMeta();
-      document.getElementById('leagueTitle').textContent = meta.leagueTitle || 'SALESIAN LEAGUE';
-      const wrap = document.getElementById('leagueLogoWrap');
-      wrap.innerHTML = '';
-      if(meta.leagueLogo) {
-        wrap.innerHTML = `<div class="league-logo"><img src="${meta.leagueLogo}" style="width:100%;height:100%;object-fit:cover"></div>`;
-      } else {
-        wrap.innerHTML = `<div class="league-logo"><span style="font-weight:800;font-size:32px;color:#fff">${(meta.leagueTitle||'S').charAt(0)}</span></div>`;
+      if(teamIdx !== -1) {
+        const score = getMatchScore(m); 
+        let winner = -1;
+        if(score[0] > score[1]) winner = 0;
+        else if(score[1] > score[0]) winner = 1;
+        if(winner !== -1 && winner === teamIdx) wins++;
       }
-    }
+    });
 
-    window.updateAdminUI = function() {
-       const lbl = document.getElementById('pinLabel');
-       if(lbl) lbl.textContent = window.adminMode ? '(ADMIN)' : '****';
-       if(window.currentView === 'admin') renderAdmin();
-       // Also refresh buttons visibility if needed
-       renderPlayers(); 
-       renderMatches();
-    }
-
-    // --- PLAYERS LOGIC ---
-    window.renderPlayers = function() {
-      const grid = document.getElementById('playersGrid');
-      if(!grid) return;
-      grid.innerHTML = '';
-      
-      const q = document.getElementById('search').value.toLowerCase();
-      const role = document.getElementById('roleFilter').value;
-      const players = window.loadPlayers().filter(p => {
-        const full = (p.firstName + ' ' + p.lastName).toLowerCase();
-        return full.includes(q) && (!role || p.position === role);
-      });
-
-      document.getElementById('totalPlayers').textContent = players.length;
-      
-      // Update role options
-      const allRoles = [...new Set(window.loadPlayers().map(p=>p.position).filter(Boolean))];
-      const roleSel = document.getElementById('roleFilter');
-      if(roleSel.options.length === 1) { // Only populate if empty (prevent reset on re-render)
-         allRoles.forEach(r => {
-           const opt = document.createElement('option');
-           opt.value = r; opt.textContent = r;
-           roleSel.appendChild(opt);
-         });
-      }
-
-      players.forEach(p => {
-        const stats = computeStats(p.id);
-        const card = document.createElement('div');
-        card.className = 'player';
-        const img = p.photo ? `<img src="${p.photo}" alt="p">` : (p.firstName[0]+p.lastName[0]);
-        const avatar = `<div class="avatar">${p.photo ? img : img}</div>`;
-        
-        card.innerHTML = `
-          ${avatar}
-          <div class="p-meta">
-            <b>${p.firstName} ${p.lastName}</b>
-            <div class="muted">${p.position || 'N/D'} • ${getAge(p.birthYear)} anni</div>
-            <div class="muted-small kv" style="margin-top:4px">G: ${stats.goals} • A: ${stats.assists} • MVP: ${p.mvpCount||0}</div>
-          </div>
-          <div style="text-align:right">
-            <div class="chip">Media: ${stats.avgVote}</div>
-            <div style="margin-top:6px;display:flex;gap:4px;justify-content:flex-end">
-               <button class="btn ghost small" onclick="event.stopPropagation(); showPlayer('${p.id}')">👁️</button>
-               ${window.adminMode ? `<button class="btn small" onclick="event.stopPropagation(); editPlayer('${p.id}')">✏️</button>` : ''}
-            </div>
-          </div>
-        `;
-        card.onclick = () => showPlayer(p.id);
-        grid.appendChild(card);
-      });
-    }
-
-    function computeStats(pid) {
-      const matches = window.loadMatches();
-      let goals=0, assists=0, played=0, sumVote=0, countVote=0;
-      
-      matches.forEach(m => {
-        // Votes & Played
-        m.formations.forEach(f => {
-          f.players.forEach(pl => {
-            if(pl.playerId === pid) {
-               played++;
-               if(pl.rating && !isNaN(pl.rating)) {
-                 sumVote += Number(pl.rating);
-                 countVote++;
-               }
-            }
-          });
-        });
-        // Events
-        (m.events||[]).forEach(ev => {
-          if(ev.playerId === pid) {
-            if(ev.type === 'goal' || ev.type === 'penalty') goals++;
-            if(ev.type === 'assist') assists++;
+    let voteSum=0, voteCount=0;
+    db.matches.forEach(m => {
+      m.formations.forEach(f => {
+        f.players.forEach(pl => {
+          if(pl.playerId === pid && pl.rating) {
+            voteSum += Number(pl.rating);
+            voteCount++;
           }
         });
       });
+    });
+
+    return { goals, played, wins, mvps, avg: voteCount ? (voteSum/voteCount).toFixed(2) : '-' };
+  }
+
+  // --- RENDERERS ---
+  
+  function renderHeader(){
+    document.getElementById('leagueTitle').textContent = db.meta.leagueTitle;
+    const wrp = document.getElementById('leagueLogoWrap');
+    if(db.meta.leagueLogo) wrp.innerHTML = `<div class="league-logo"><img src="${db.meta.leagueLogo}" style="width:100%;height:100%;object-fit:cover"></div>`;
+    else wrp.innerHTML = `<div class="league-logo"><div style="font-size:30px;font-weight:800;color:white">${db.meta.leagueTitle.charAt(0)}</div></div>`;
+  }
+
+  window.renderPlayers = (filter='') => {
+    const grid = document.getElementById('playersGrid');
+    grid.innerHTML = '';
+    const roleVal = document.getElementById('roleFilter').value;
+    const searchVal = filter || document.getElementById('search').value;
+    
+    const roleSel = document.getElementById('roleFilter');
+    if(roleSel.options.length===1) {
+       const roles = [...new Set(db.players.map(p=>p.position).filter(Boolean))];
+       roles.forEach(r => roleSel.innerHTML += `<option value="${r}">${r}</option>`);
+    }
+
+    const list = db.players.filter(p => {
+      const full = (p.firstName+' '+p.lastName).toLowerCase();
+      return full.includes(searchVal.toLowerCase()) && (!roleVal || p.position === roleVal);
+    });
+    
+    document.getElementById('totalPlayers').textContent = list.length;
+    list.sort((a,b)=> a.lastName.localeCompare(b.lastName));
+
+    list.forEach(p => {
+      const s = getPlayerStats(p.id);
+      const el = document.createElement('div');
+      el.className = 'player';
+      const img = p.photo ? `<img src="${p.photo}">` : (p.firstName[0]+p.lastName[0]);
       
-      return {
-        goals, assists, played,
-        avgVote: countVote ? (sumVote/countVote).toFixed(2) : '-'
-      };
-    }
+      const btns = adminMode 
+        ? `<button class="btn ghost small" onclick="event.stopPropagation(); window.deletePlayer('${p.id}')" style="color:var(--accent);position:relative;z-index:10">✕</button>`
+        : ``;
 
-    function getAge(y) { return y ? new Date().getFullYear() - y : '?'; }
+      el.innerHTML = `
+        <div class="avatar">${p.photo ? img : img}</div>
+        <div class="p-meta">
+          <b>${escape(p.firstName)} ${escape(p.lastName)}</b>
+          <div class="muted">${escape(p.position)} • Media: ${s.avg}</div>
+          <div class="muted-small kv" style="margin-top:4px">Gol: ${s.goals} • Win: ${s.wins} • MVP: ${s.mvps}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-left:auto;align-items:flex-end">
+          <button class="btn ghost small" onclick="window.viewPlayer('${p.id}')">👁️</button>
+          ${btns}
+        </div>
+      `;
+      grid.appendChild(el);
+    });
+  }
 
-    // --- MATCHES LOGIC ---
-    window.renderMatches = function() {
-       const tbody = document.getElementById('matchesTable');
-       if(!tbody) return;
-       tbody.innerHTML = '';
-       
-       const matches = window.loadMatches(); // already sorted
-       const searchDate = document.getElementById('search').value;
-       
-       matches.forEach(m => {
-         // Highlight if search matches date
-         const mDate = new Date(m.date).toLocaleDateString();
-         const highlight = searchDate && (m.date === searchDate || mDate.includes(searchDate));
-         
-         const score = computeScore(m);
-         const tr = document.createElement('tr');
-         if(highlight) tr.style.background = 'rgba(255,59,59,0.1)';
-         
-         tr.innerHTML = `
-           <td>${new Date(m.date).toLocaleDateString()}</td>
-           <td>
-             <div style="font-weight:700">${m.title}</div>
-             <div class="muted-small">${m.formations.map(f=>f.teamName).join(' vs ')}</div>
-           </td>
-           <td style="font-weight:700;color:var(--accent)">${score}</td>
-           <td style="text-align:right">
-             <button class="btn ghost small" onclick="showMatch('${m.id}')">Apri</button>
-             ${window.adminMode ? `<button class="btn small" onclick="editMatch('${m.id}')">✏️</button>` : ''}
-           </td>
-         `;
-         tbody.appendChild(tr);
-       });
-    }
+  window.renderMatches = () => {
+    const tb = document.getElementById('matchesTable');
+    tb.innerHTML = '';
+    const sorted = [...db.matches].sort((a,b)=>new Date(b.date)-new Date(a.date));
+    
+    if(sorted.length===0) tb.innerHTML = `<tr><td colspan="4" class="muted-small">Nessuna partita.</td></tr>`;
 
-    function computeScore(m) {
-      const s = [0, 0];
-      (m.events||[]).forEach(e => {
-        if((e.type==='goal'||e.type==='penalty') && e.teamIndex !== null) {
-          s[e.teamIndex]++;
-        }
+    sorted.forEach(m => {
+      const score = getMatchScore(m);
+      const row = document.createElement('tr');
+      const l1 = m.formations[0].teamLogo ? `<img src="${m.formations[0].teamLogo}" class="logo-thumb" style="width:24px;height:24px;vertical-align:middle">` : '';
+      const l2 = m.formations[1].teamLogo ? `<img src="${m.formations[1].teamLogo}" class="logo-thumb" style="width:24px;height:24px;vertical-align:middle">` : '';
+
+      const editBtn = adminMode ? `<button class="btn ghost small" onclick="window.editMatch('${m.id}')">✏️</button>` : '';
+
+      row.innerHTML = `
+        <td>${new Date(m.date).toLocaleDateString()}</td>
+        <td>
+           <div style="font-weight:bold">${escape(m.title)}</div>
+           <div class="muted-small">${l1} ${escape(m.formations[0].teamName)} vs ${l2} ${escape(m.formations[1].teamName)}</div>
+        </td>
+        <td style="font-weight:bold;font-size:16px;color:var(--accent)">${score[0]} - ${score[1]}</td>
+        <td>
+          <button class="btn ghost small" onclick="window.viewMatch('${m.id}')">Cronaca</button>
+          ${editBtn}
+        </td>
+      `;
+      tb.appendChild(row);
+    });
+  }
+
+  window.renderRankings = () => {
+    const data = db.players.map(p => {
+      const s = getPlayerStats(p.id);
+      return { ...p, ...s };
+    });
+
+    const buildList = (containerId, sortFn, valFn, label) => {
+      const div = document.getElementById(containerId);
+      const sorted = [...data].sort(sortFn);
+      
+      let html = '';
+      sorted.slice(0,3).forEach((p, i) => {
+        const val = valFn(p);
+        if(val === 0) return;
+        const img = p.photo ? `<img src="${p.photo}" class="rank-avatar">` : `<div class="rank-avatar" style="display:grid;place-items:center;font-size:10px">${p.firstName[0]}</div>`;
+        html += `<div class="podium-item p-${i+1}">
+          <div style="font-weight:bold;width:20px">${i+1}.</div>
+          ${img}
+          <div style="flex:1;font-size:14px"><b>${escape(p.lastName)}</b> ${escape(p.firstName)}</div>
+          <div style="font-weight:bold;color:var(--accent)">${val} ${label}</div>
+        </div>`;
       });
-      return s.join(' - ');
-    }
 
-    // --- CALENDAR & RANKINGS ---
-    window.renderCalendar = function() {
-       const div = document.getElementById('calendarList');
-       if(!div) return;
-       const matches = [...window.loadMatches()].sort((a,b)=>new Date(a.date)-new Date(b.date)); // Asc
-       div.innerHTML = matches.map(m => `
-         <div style="padding:12px;background:var(--card);border-radius:10px;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--glass-border)">
-           <div>
-             <div style="font-weight:700">${new Date(m.date).toLocaleDateString()} - ${m.title}</div>
-             <div class="muted-small">${m.formations.map(f=>f.teamName).join(' vs ')}</div>
-           </div>
-           <div style="font-weight:bold">${computeScore(m)}</div>
+      const rest = sorted.slice(3).filter(p => valFn(p) > 0);
+      if(rest.length > 0) {
+        const restId = containerId + '_rest';
+        html += `<button class="btn ghost small" style="width:100%;margin-top:8px" onclick="document.getElementById('${restId}').style.display='block';this.style.display='none'">Mostra altri (${rest.length})</button>`;
+        html += `<div id="${restId}" class="hidden-list" style="margin-top:8px">`;
+        rest.forEach((p, i) => {
+           html += `<div style="display:flex;justify-content:space-between;padding:6px;border-bottom:1px solid rgba(255,255,255,0.02);font-size:13px">
+             <span>${i+4}. ${escape(p.lastName)} ${escape(p.firstName)}</span>
+             <b>${valFn(p)}</b>
+           </div>`;
+        });
+        html += `</div>`;
+      } else if (html === '') {
+        html = '<div class="muted-small">Nessun dato.</div>';
+      }
+      div.innerHTML = html;
+    };
+
+    buildList('rankGoals', (a,b)=>b.goals-a.goals, p=>p.goals, '');
+    buildList('rankWins', (a,b)=>b.wins-a.wins, p=>p.wins, '');
+    buildList('rankMvps', (a,b)=>b.mvps-a.mvps, p=>p.mvps, '');
+  }
+
+  window.renderCalendar = () => {
+    const c = document.getElementById('calendarList');
+    c.innerHTML = '';
+    const sorted = [...db.matches].sort((a,b)=>new Date(a.date)-new Date(b.date));
+    sorted.forEach(m => {
+       const s = getMatchScore(m);
+       const played = (m.events||[]).some(e=>['goal','penalty','own'].includes(e.type));
+       c.innerHTML += `<div style="background:var(--card);padding:10px;border-radius:10px;margin-bottom:8px;border:1px solid var(--glass-border)">
+         <div style="display:flex;justify-content:space-between">
+            <b>${new Date(m.date).toLocaleDateString()}</b>
+            <span>${played ? s.join('-') : 'Da giocare'}</span>
          </div>
-       `).join('') || '<div class="muted">Nessuna partita.</div>';
-    }
+         <div class="muted-small">${escape(m.title)}</div>
+         <div style="margin-top:4px">${escape(m.formations[0].teamName)} vs ${escape(m.formations[1].teamName)}</div>
+       </div>`;
+    });
+  }
 
-    window.renderRankings = function() {
-      const players = window.loadPlayers();
-      const data = players.map(p => {
-        const s = computeStats(p.id);
-        return { ...p, ...s, mvp: p.mvpCount || 0 };
-      });
-      
-      const makeList = (arr, valFn, label) => {
-        return arr.sort((a,b)=>valFn(b)-valFn(a)).slice(0,10).map((p,i) => `
-          <div class="rank-item">
-            <div style="display:flex;gap:8px;align-items:center">
-              <span style="color:var(--muted);width:20px">${i+1}.</span>
-              <span>${p.firstName} ${p.lastName}</span>
-            </div>
-            <div class="rank-val">${valFn(p)} ${label}</div>
-          </div>
-        `).join('');
-      };
-
-      document.getElementById('rankingGoals').innerHTML = makeList(data, p=>p.goals, 'Goal');
-      document.getElementById('rankingAssists').innerHTML = makeList(data, p=>p.assists, 'Assist');
-      document.getElementById('rankingMvp').innerHTML = makeList(data, p=>p.mvp, 'MVP');
-    }
-
-    // --- ADMIN ---
-    window.renderAdmin = function() {
-      const div = document.getElementById('viewAdmin');
-      if(!div) return;
-      
-      if(!window.adminMode) {
-        div.innerHTML = `
-          <div style="text-align:center;margin-top:40px">
-            <h3>Area Riservata</h3>
-            <p class="muted">Inserisci il PIN per gestire la lega.</p>
-            <button class="btn" onclick="checkAdmin()">Accedi</button>
-            <div style="margin-top:20px;font-size:12px;color:gray">Default PIN: 2209</div>
-          </div>
-        `;
-        return;
-      }
-
+  window.renderAdmin = () => {
+    const div = document.getElementById('viewAdmin');
+    if(!adminMode){
+      div.innerHTML = `<div style="text-align:center;padding:40px">
+        <h2>Area Admin</h2>
+        <div style="max-width:300px;margin:20px auto;display:flex;gap:8px">
+          <input type="password" id="adminPinInp" placeholder="PIN" style="text-align:center">
+          <button class="btn" onclick="window.tryLogin()">Entra</button>
+        </div>
+      </div>`;
+    } else {
       div.innerHTML = `
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-          <h2>Pannello Admin</h2>
-          <button class="btn ghost small" onclick="logoutAdmin()">Disconnetti</button>
+           <h2>Pannello Admin</h2>
+           <button class="btn ghost small" onclick="window.adminLogout()">Esci</button>
         </div>
-        
         <div class="grid">
-          <div style="background:var(--card);padding:14px;border-radius:12px;border:1px solid var(--glass-border)">
-            <h4>Giocatori</h4>
-            <button class="btn small" onclick="openAddPlayer()">+ Aggiungi Giocatore</button>
-            <button class="btn ghost small" onclick="exportCSV()">Esporta CSV Stats</button>
-          </div>
-          
-          <div style="background:var(--card);padding:14px;border-radius:12px;border:1px solid var(--glass-border)">
-            <h4>Partite</h4>
-            <button class="btn small" onclick="openAddMatch()">+ Crea Partita</button>
-          </div>
-
-          <div style="background:var(--card);padding:14px;border-radius:12px;border:1px solid var(--glass-border)">
-            <h4>Sistema</h4>
-            <div style="display:flex;flex-direction:column;gap:8px">
-              <button class="btn ghost small" onclick="editLeagueMeta()">Modifica Titolo/Logo</button>
-              <button class="btn ghost small" onclick="changePin()">Cambia PIN</button>
-              <button class="btn ghost small" onclick="exportJSON()">Backup JSON</button>
-            </div>
-          </div>
+           <div class="rank-card">
+              <h4>Gestione</h4>
+              <button class="btn small" style="width:100%;margin-bottom:8px" onclick="window.openAddPlayer()">+ Giocatore</button>
+              <button class="btn small" style="width:100%" onclick="window.openAddMatch()">+ Partita</button>
+           </div>
+           <div class="rank-card">
+              <h4>Sistema</h4>
+              <button class="btn ghost small" style="width:100%;margin-bottom:8px" onclick="window.editMeta()">Logo / Titolo</button>
+              <button class="btn ghost small" style="width:100%;margin-bottom:8px" onclick="window.exportData()">Backup JSON</button>
+              <button class="btn ghost small" style="width:100%" onclick="window.changePin()">Cambia PIN</button>
+           </div>
         </div>
       `;
     }
+  }
 
-    window.checkAdmin = function() {
-      const pin = prompt("PIN Admin:");
-      if(pin === window.getAdmin().pin) {
-        window.adminMode = true;
-        window.updateAdminUI();
-        window.writeLog('login', 'Success');
+  // --- ACTIONS (ASSIGNED TO WINDOW) ---
+
+  window.tryLogin = () => {
+    const v = document.getElementById('adminPinInp').value;
+    if(v === db.admin.pin) { 
+      adminMode = true; 
+      document.getElementById('pinLabel').innerText = "(Admin)";
+      renderAll(); 
+    } else alert('Errato');
+  }
+  window.adminLogout = () => { 
+    adminMode = false; 
+    document.getElementById('pinLabel').innerText = "****"; 
+    renderAll(); 
+  }
+
+  // MODAL LOGIC WITH BACK SUPPORT
+  window.closeModal = () => {
+      const modal = document.getElementById('modal');
+      // If we are closing a match AND we have a returnToPlayerId, open that player's profile
+      if(returnToPlayerId) {
+          const pid = returnToPlayerId;
+          returnToPlayerId = null; // reset
+          window.viewPlayer(pid); // Re-open player
       } else {
-        alert("PIN Errato");
+          modal.style.display='none';
+          document.getElementById('modalContent').innerHTML = '';
       }
-    }
-    window.logoutAdmin = function() { window.adminMode = false; window.updateAdminUI(); }
-
-    // --- MODALS & FORMS ---
-    function openModal(html) {
+  };
+  
+  function openModal(html, backSupported=false){
+      if(!backSupported) returnToPlayerId = null; // If opening something new, clear history
       const m = document.getElementById('modalContent');
-      const b = document.getElementById('modal');
       m.innerHTML = html;
-      b.style.display = 'flex';
-      b.setAttribute('aria-hidden','false');
-    }
-    window.closeModal = function() {
-       document.getElementById('modal').style.display='none';
-    }
+      document.getElementById('modal').style.display = 'flex';
+  }
 
-    // 1. ADD PLAYER
-    window.openAddPlayer = function() {
-       if(!window.adminMode) return checkAdmin();
-       openModal(`
-         <div class="close-x" onclick="closeModal()">✕</div>
-         <h3>Nuovo Giocatore</h3>
-         <form id="frmAddPlayer" class="row">
-           <div style="flex:1"><label class="kv">Nome</label><input name="fn" required></div>
-           <div style="flex:1"><label class="kv">Cognome</label><input name="ln" required></div>
-           <div style="width:100%"><label class="kv">Anno Nascita</label><input name="by" type="number" value="2000"></div>
-           <div style="width:100%"><label class="kv">Ruolo</label><input name="pos" placeholder="es. Attaccante"></div>
-           <div style="width:100%"><label class="kv">Foto</label><input type="file" id="inpPhoto" accept="image/*"></div>
-           <button class="btn" style="margin-top:10px">Salva</button>
-         </form>
-       `);
-       document.getElementById('frmAddPlayer').onsubmit = async (e) => {
-         e.preventDefault();
-         const f = e.target;
-         const photo = await readFile(document.getElementById('inpPhoto').files[0]);
-         const id = 'p_'+Date.now();
-         const players = window.loadPlayers();
-         players.push({
-           id, firstName: f.fn.value, lastName: f.ln.value, 
-           birthYear: f.by.value, position: f.pos.value, photo, mvpCount:0
-         });
-         await window.savePlayers(players);
-         closeModal();
-       };
-    }
+  // SYSTEM ACTIONS
+  window.editMeta = () => {
+     openModal(`
+       <div class="close-x" onclick="window.closeModal()">✕</div>
+       <h3>Impostazioni Lega</h3>
+       <form id="metaForm" class="row">
+         <div style="width:100%"><label class="kv">Nome Lega</label><input name="tit" value="${escape(db.meta.leagueTitle)}" required></div>
+         <div style="width:100%"><label class="kv">Logo Lega</label><input type="file" id="metaLogo"></div>
+         <button class="btn" style="width:100%;margin-top:10px">Salva</button>
+       </form>
+     `);
+     document.getElementById('metaForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const t = e.target.tit.value;
+        const f = document.getElementById('metaLogo').files[0];
+        if(t) db.meta.leagueTitle = t;
+        if(f) db.meta.leagueLogo = await readFlo(f);
+        saveDB(); 
+        window.closeModal(); 
+        renderAll();
+     };
+  }
 
-    // 2. EDIT PLAYER
-    window.editPlayer = function(id) {
-       const p = window.loadPlayers().find(x=>x.id===id);
-       openModal(`
-         <div class="close-x" onclick="closeModal()">✕</div>
-         <h3>Modifica ${p.firstName}</h3>
-         <form id="frmEditPlayer" class="row">
-           <input name="fn" value="${p.firstName}" placeholder="Nome">
-           <input name="ln" value="${p.lastName}" placeholder="Cognome">
-           <input name="by" type="number" value="${p.birthYear}">
-           <input name="pos" value="${p.position}" placeholder="Ruolo">
-           <label class="kv">Foto (lascia vuoto per mantenere)</label>
-           <input type="file" id="inpPhoto" accept="image/*">
-           <div style="width:100%;margin-top:10px;display:flex;justify-content:space-between">
-             <button type="button" class="btn ghost" onclick="deletePlayer('${id}')">Elimina</button>
-             <button class="btn">Salva</button>
-           </div>
-         </form>
-       `);
-       document.getElementById('frmEditPlayer').onsubmit = async (e) => {
-         e.preventDefault();
-         const f = e.target;
-         let photo = p.photo;
-         if(document.getElementById('inpPhoto').files[0]) {
-           photo = await readFile(document.getElementById('inpPhoto').files[0]);
-         }
-         const update = { ...p, firstName: f.fn.value, lastName: f.ln.value, birthYear: f.by.value, position: f.pos.value, photo };
-         const players = window.loadPlayers().map(x => x.id===id ? update : x);
-         await window.savePlayers(players);
-         closeModal();
-       }
-    }
+  window.changePin = () => {
+     const p = prompt("Inserisci il nuovo PIN:");
+     if(p) { db.admin.pin = p; saveDB(); alert("PIN Cambiato con successo!"); }
+  }
+
+  window.exportData = () => {
+     const blob = new Blob([JSON.stringify(db)], {type:'application/json'});
+     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='salesian_league_backup.json'; a.click();
+  }
+
+  window.triggerImport = () => {
+     const i = document.createElement('input'); i.type='file'; 
+     i.onchange=e=>{
+        const r=new FileReader();
+        r.onload=ev=>{ try{ db=JSON.parse(ev.target.result); saveDB(); renderAll(); alert("Database Importato!"); }catch(x){alert("File non valido");} };
+        r.readAsText(e.target.files[0]);
+     };
+     i.click();
+  }
+
+  window.openAddPlayer = () => {
+    if(!adminMode) return alert("Accedi come admin!");
+    openModal(`
+      <div class="close-x" onclick="window.closeModal()">✕</div>
+      <h3>Nuovo Giocatore</h3>
+      <form id="frmP" class="row">
+        <input name="fn" placeholder="Nome" required>
+        <input name="ln" placeholder="Cognome" required>
+        <input name="by" type="number" placeholder="Anno (es. 2000)">
+        <select name="pos">${['Portiere','Difensore','Centrocampista','Attaccante'].map(r=>`<option>${r}</option>`)}</select>
+        <div style="width:100%"><label class="kv">Foto</label><input type="file" id="fp" accept="image/*"></div>
+        <div class="kv" style="width:100%">Scheda Tecnica (0-10)</div>
+        <input name="v1" type="number" placeholder="Tecnica">
+        <input name="v2" type="number" placeholder="Fisico">
+        <input name="v3" type="number" placeholder="Velocità">
+        <button class="btn" style="width:100%;margin-top:10px">Salva</button>
+      </form>
+    `);
+    document.getElementById('frmP').onsubmit = async(e)=>{
+      e.preventDefault();
+      const fd=new FormData(e.target);
+      const photo = await readFlo(document.getElementById('fp').files[0]);
+      db.players.push({
+        id: 'p_'+uid(),
+        firstName: fd.get('fn'), lastName: fd.get('ln'),
+        birthYear: fd.get('by'), position: fd.get('pos'),
+        ratings: {tec:fd.get('v1'), fis:fd.get('v2'), vel:fd.get('v3')},
+        photo
+      });
+      saveDB(); window.closeModal(); renderAll();
+    };
+  }
+
+  window.viewPlayer = (pid) => {
+    const p = db.players.find(x=>x.id===pid);
+    const s = getPlayerStats(pid);
+    const btns = adminMode ? 
+      `<button class="btn small" onclick="window.editPlayer('${pid}')">Modifica</button>` : '';
+
+    // History Matches
+    const history = db.matches.filter(m => 
+        m.formations.some(f => f.players.some(pl => pl.playerId === pid))
+    ).sort((a,b) => new Date(b.date) - new Date(a.date));
+
+    const historyHTML = history.map(m => {
+        const score = getMatchScore(m);
+        // PASS TRUE as second arg to set the return path!
+        return `<div class="match-history-item" onclick="window.viewMatch('${m.id}', '${pid}')">
+            <div style="display:flex;justify-content:space-between;width:100%">
+                <div>
+                    <div style="font-size:13px;font-weight:bold">${escape(m.title)}</div>
+                    <div class="muted-small">${new Date(m.date).toLocaleDateString()}</div>
+                </div>
+                <div style="font-weight:bold;color:var(--accent);display:flex;align-items:center;gap:5px">
+                    ${score[0]}-${score[1]} <button class="btn ghost small">👁️</button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
     
-    window.deletePlayer = async function(id) {
-      if(!confirm("Eliminare?")) return;
-      const players = window.loadPlayers().filter(x=>x.id!==id);
-      await window.savePlayers(players);
-      closeModal();
-    }
+    openModal(`
+      <div class="close-x" onclick="window.closeModal()">✕</div>
+      <div style="display:flex;gap:15px;align-items:center">
+         ${p.photo ? `<img src="${p.photo}" style="width:80px;height:80px;border-radius:12px;object-fit:cover">` : `<div class="avatar" style="width:80px;height:80px;font-size:30px">${p.firstName[0]}</div>`}
+         <div>
+            <h2 style="margin:0">${escape(p.firstName)} ${escape(p.lastName)}</h2>
+            <div class="muted">${escape(p.position)} • ${p.birthYear}</div>
+         </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0;text-align:center">
+         <div class="rank-card"><b>${s.played}</b><br><span class="muted-small">Partite</span></div>
+         <div class="rank-card"><b>${s.goals}</b><br><span class="muted-small">Gol</span></div>
+         <div class="rank-card"><b>${s.wins}</b><br><span class="muted-small">Vinte</span></div>
+         <div class="rank-card"><b>${s.mvps}</b><br><span class="muted-small">MVP</span></div>
+      </div>
+      <div class="kv">Scheda Tecnica</div>
+      <div style="display:flex;gap:10px;margin-bottom:20px">
+        <span class="chip">Tecnica: ${p.ratings.tec||'-'}</span>
+        <span class="chip">Fisico: ${p.ratings.fis||'-'}</span>
+        <span class="chip">Velocità: ${p.ratings.vel||'-'}</span>
+      </div>
+      
+      <div class="kv">Storico Partite</div>
+      <div style="max-height:200px;overflow-y:auto;margin-bottom:15px">
+         ${historyHTML || '<div class="muted-small">Nessuna partita giocata.</div>'}
+      </div>
 
-    // 3. SHOW PLAYER
-    window.showPlayer = function(id) {
-       const p = window.loadPlayers().find(x=>x.id===id);
-       const stats = computeStats(id);
-       openModal(`
-         <div class="close-x" onclick="closeModal()">✕</div>
-         <div style="text-align:center">
-            ${p.photo ? `<img src="${p.photo}" style="width:100px;height:100px;border-radius:14px;object-fit:cover;margin-bottom:10px">` : ''}
-            <h2>${p.firstName} ${p.lastName}</h2>
-            <div class="muted">${p.position} • ${getAge(p.birthYear)} anni</div>
-            <div style="display:flex;justify-content:center;gap:12px;margin-top:16px">
-               <div class="chip">Gol: ${stats.goals}</div>
-               <div class="chip">Assist: ${stats.assists}</div>
-               <div class="chip">MVP: ${p.mvpCount||0}</div>
-               <div class="chip">Media: ${stats.avgVote}</div>
+      <div style="text-align:right">${btns}</div>
+    `);
+  }
+
+  window.editPlayer = (pid) => {
+    const p = db.players.find(x=>x.id===pid);
+    openModal(`
+      <div class="close-x" onclick="window.closeModal()">✕</div>
+      <h3>Modifica</h3>
+      <form id="efp" class="row">
+        <input name="fn" value="${escape(p.firstName)}">
+        <input name="ln" value="${escape(p.lastName)}">
+        <input name="pos" value="${escape(p.position)}">
+        <div style="width:100%"><label class="kv">Foto</label><input type="file" id="efpf"></div>
+        <button class="btn" style="width:100%">Aggiorna</button>
+      </form>
+    `);
+    document.getElementById('efp').onsubmit = async(e)=>{
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      p.firstName = fd.get('fn'); p.lastName = fd.get('ln'); p.position = fd.get('pos');
+      const f = document.getElementById('efpf').files[0];
+      if(f) p.photo = await readFlo(f);
+      saveDB(); window.closeModal(); renderAll();
+    }
+  }
+
+  window.deletePlayer = (pid) => {
+    if(!confirm("ELIMINARE? Questa azione è irreversibile e rimuoverà il giocatore da tutte le partite!")) return;
+    
+    // Remove player
+    db.players = db.players.filter(x=>x.id!==pid);
+    
+    // Clean matches (remove player from formations, events, mvp)
+    db.matches.forEach(m => {
+        m.formations.forEach(f => {
+            f.players = f.players.filter(pl => pl.playerId !== pid);
+        });
+        m.events = (m.events||[]).filter(ev => ev.playerId !== pid);
+        if(m.mvpPlayerId === pid) m.mvpPlayerId = null;
+    });
+
+    saveDB(); 
+    // Force close any modal
+    document.getElementById('modal').style.display='none';
+    renderAll();
+  }
+
+  window.openAddMatch = () => {
+    if(!adminMode) return alert("Accedi come admin!");
+    const opts = db.players.map(p=>`<option value="${p.id}">${escape(p.lastName)} ${escape(p.firstName)}</option>`).join('');
+    openModal(`
+      <div class="close-x" onclick="window.closeModal()">✕</div>
+      <h3>Crea Partita</h3>
+      <form id="nmf">
+        <div class="row">
+           <input name="tit" placeholder="Titolo (es. 1° Giornata)" required>
+           <input name="dat" type="date" required>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px">
+           <div class="rank-card">
+              <label class="kv">Squadra A</label>
+              <input name="ta_n" value="Team A" placeholder="Nome">
+              <input type="file" id="fa_logo" class="muted-small">
+              <select id="selA" multiple style="height:100px;margin-top:5px">${opts}</select>
+           </div>
+           <div class="rank-card">
+              <label class="kv">Squadra B</label>
+              <input name="tb_n" value="Team B" placeholder="Nome">
+              <input type="file" id="fb_logo" class="muted-small">
+              <select id="selB" multiple style="height:100px;margin-top:5px">${opts}</select>
+           </div>
+        </div>
+        <button class="btn" style="width:100%;margin-top:15px">Crea</button>
+      </form>
+    `);
+    document.getElementById('nmf').onsubmit = async (e) => {
+       e.preventDefault();
+       const fd = new FormData(e.target);
+       const lA = await readFlo(document.getElementById('fa_logo').files[0]);
+       const lB = await readFlo(document.getElementById('fb_logo').files[0]);
+       
+       // Get players and COPY their current role
+       const getPls = (selId) => [...document.getElementById(selId).selectedOptions].map(o=>{
+           const p = db.players.find(x=>x.id===o.value);
+           return {playerId:o.value, rating:'', role: p ? p.position : ''};
+       });
+       
+       db.matches.push({
+         id: 'm_'+uid(),
+         title: fd.get('tit'), date: fd.get('dat'),
+         formations: [
+           { teamName: fd.get('ta_n'), teamLogo: lA, players: getPls('selA') },
+           { teamName: fd.get('tb_n'), teamLogo: lB, players: getPls('selB') }
+         ],
+         events: [],
+         mvpPlayerId: null
+       });
+       saveDB(); window.closeModal(); renderAll();
+    };
+  }
+
+  // --- VIEW MATCH (With Timeline & Back support) ---
+  window.viewMatch = (mid, fromPid = null) => {
+    if(fromPid) returnToPlayerId = fromPid; // Set return path
+
+    const m = db.matches.find(x=>x.id===mid);
+    const score = getMatchScore(m);
+    
+    // Chat-style Timeline
+    const eventsSorted = (m.events||[]).sort((a,b)=>a.minute-b.minute);
+    let timelineHTML = `<div class="timeline-container">`;
+    
+    if(eventsSorted.length === 0) timelineHTML += `<div class="muted-small" style="text-align:center">Nessun evento</div>`;
+
+    eventsSorted.forEach(ev => {
+       const p = db.players.find(x=>x.id===ev.playerId);
+       const name = p ? p.lastName : '?';
+       const sideClass = ev.teamIndex === 0 ? 'left' : 'right';
+       
+       let label = ev.type.toUpperCase();
+       let color = 'white';
+       if(ev.type==='goal'||ev.type==='penalty') color='var(--accent)';
+       else if(ev.type==='red') color='red';
+       else if(ev.type==='own') { color='orange'; label='AUTOGOL'; }
+
+       timelineHTML += `
+         <div class="timeline-row ${sideClass}">
+            <div class="timeline-event">
+               <div class="timeline-minute">${ev.minute}'</div>
+               <div style="font-weight:bold;color:${color}">${label}</div>
+               <div style="font-size:13px">${escape(name)}</div>
             </div>
          </div>
-         <hr style="border:0;border-top:1px solid rgba(255,255,255,0.1);margin:20px 0">
-         <h4>Ultime Partite</h4>
-         <div id="pMatchesList"></div>
-       `);
-       // List matches
-       const list = document.getElementById('pMatchesList');
-       window.loadMatches().forEach(m => {
-          const played = m.formations.some(f => f.players.some(pl => pl.playerId === id));
-          if(played) {
-             list.innerHTML += `<div style="padding:8px;border-bottom:1px solid rgba(255,255,255,0.05)">${new Date(m.date).toLocaleDateString()} - ${m.title} <span class="muted-small">(${computeScore(m)})</span></div>`;
-          }
+       `;
+    });
+    timelineHTML += `</div>`;
+
+    let mvpShow = '';
+    if(m.mvpPlayerId){
+       const mvpP = db.players.find(x=>x.id===m.mvpPlayerId);
+       if(mvpP) mvpShow = `<div class="rank-card" style="margin-top:10px;text-align:center;border-color:gold">⭐ MVP: <b>${mvpP.firstName} ${mvpP.lastName}</b></div>`;
+    }
+
+    const renderTeam = (idx) => {
+      const f = m.formations[idx];
+      return `<div>
+        <div style="font-weight:bold;border-bottom:1px solid var(--glass-border);padding-bottom:5px;margin-bottom:5px">${f.teamLogo?`<img src="${f.teamLogo}" class="logo-thumb" style="vertical-align:middle;margin-right:5px">`:''}${escape(f.teamName)}</div>
+        ${f.players.map(pl=>{
+           const ply = db.players.find(x=>x.id===pl.playerId);
+           // Show the role saved in match, fallback to player role
+           const roleDisplay = pl.role || (ply?ply.position:'');
+           return `<div style="font-size:13px;display:flex;justify-content:space-between;padding:3px 0">
+             <span>${ply?ply.lastName:''}</span>
+             <span>${roleDisplay?`<span class="muted-small">${roleDisplay}</span>`:''} <b style="color:${pl.rating>=6?'lightgreen':'#ff6b6b'}">${pl.rating||'-'}</b></span>
+           </div>`;
+        }).join('')}
+      </div>`;
+    };
+
+    // We pass true to openModal to indicate we might want to preserve the return path
+    openModal(`
+      <div class="close-x" onclick="window.closeModal()">✕</div>
+      <div style="text-align:center">
+         <div class="muted-small">${new Date(m.date).toLocaleDateString()}</div>
+         <h3>${escape(m.title)}</h3>
+         <div style="font-size:36px;font-weight:800;color:var(--accent);margin:10px 0">${score[0]} - ${score[1]}</div>
+      </div>
+      ${mvpShow}
+      <div class="grid" style="margin-top:20px">
+         ${renderTeam(0)}
+         ${renderTeam(1)}
+      </div>
+      <h4 style="border-bottom:1px solid var(--glass-border);padding-bottom:5px;margin-top:20px">Cronaca</h4>
+      ${timelineHTML}
+    `, true);
+  }
+
+  window.editMatch = (mid) => {
+    const m = db.matches.find(x=>x.id===mid);
+    
+    const allPlayersInMatch = [...m.formations[0].players, ...m.formations[1].players];
+    const getPOpts = (selId) => allPlayersInMatch.map(pl => {
+       const p = db.players.find(x=>x.id===pl.playerId);
+       if(!p) return '';
+       return `<option value="${p.id}" ${selId===p.id?'selected':''}>${p.lastName} ${p.firstName}</option>`;
+    }).join('');
+
+    const evRows = (m.events||[]).map((ev, i) => `
+      <div class="event-row">
+         <input type="number" class="ev-min" value="${ev.minute}" placeholder="Min" inputmode="numeric">
+         <select class="ev-type">
+            <option value="goal" ${ev.type==='goal'?'selected':''}>Goal</option>
+            <option value="penalty" ${ev.type==='penalty'?'selected':''}>Rigore</option>
+            <option value="own" ${ev.type==='own'?'selected':''}>Autogol</option>
+            <option value="red" ${ev.type==='red'?'selected':''}>Rosso</option>
+         </select>
+         <select class="ev-team">
+            <option value="0" ${ev.teamIndex==0?'selected':''}>${m.formations[0].teamName}</option>
+            <option value="1" ${ev.teamIndex==1?'selected':''}>${m.formations[1].teamName}</option>
+         </select>
+         <select class="ev-pl">${getPOpts(ev.playerId)}</select>
+         <button class="btn ghost small" onclick="this.parentElement.remove()">X</button>
+      </div>
+    `).join('');
+
+    const renderTeamInputs = (idx) => {
+       return m.formations[idx].players.map((pl, pi) => {
+          const p = db.players.find(x=>x.id===pl.playerId);
+          return `<div style="display:flex;gap:5px;margin-bottom:4px;align-items:center">
+             <div style="width:100px;font-size:12px;overflow:hidden;text-overflow:ellipsis">${p.lastName}</div>
+             <input value="${pl.role||''}" placeholder="Ruolo" id="role_${idx}_${pi}" style="padding:4px !important">
+             <input type="number" value="${pl.rating||''}" placeholder="Voto" id="rate_${idx}_${pi}" style="padding:4px !important;width:60px">
+          </div>`;
+       }).join('');
+    }
+
+    openModal(`
+      <div class="close-x" onclick="window.closeModal()">✕</div>
+      <h3>Modifica Partita</h3>
+      <div class="grid">
+        <div>
+           <label class="kv">${m.formations[0].teamName} (Logo/Nome)</label>
+           <input id="en_tA" value="${m.formations[0].teamName}">
+           <input type="file" id="el_tA">
+           <div style="margin-top:10px;max-height:200px;overflow:auto">${renderTeamInputs(0)}</div>
+        </div>
+        <div>
+           <label class="kv">${m.formations[1].teamName} (Logo/Nome)</label>
+           <input id="en_tB" value="${m.formations[1].teamName}">
+           <input type="file" id="el_tB">
+           <div style="margin-top:10px;max-height:200px;overflow:auto">${renderTeamInputs(1)}</div>
+        </div>
+      </div>
+      
+      <div style="margin-top:20px;border-top:1px solid var(--glass-border);padding-top:10px">
+         <label class="kv">MVP Unico</label>
+         <select id="mvpSel" style="background:#222"><option value="">-- Nessuno --</option>${getPOpts(m.mvpPlayerId)}</select>
+      </div>
+
+      <div style="margin-top:20px;border-top:1px solid var(--glass-border);padding-top:10px">
+         <div style="display:flex;justify-content:space-between">
+            <label class="kv">Cronaca (Eventi)</label>
+            <button class="btn small" onclick="window.addEvRow('${m.id}')">+ Evento</button>
+         </div>
+         <div id="evList">${evRows}</div>
+      </div>
+
+      <div style="margin-top:20px;display:flex;justify-content:space-between">
+         <button class="btn ghost" onclick="window.deleteMatch('${mid}')" style="color:var(--accent)">Elimina Partita</button>
+         <button class="btn" onclick="window.saveMatchEdits('${mid}')">Salva Modifiche</button>
+      </div>
+    `);
+  }
+  
+  window.addEvRow = (mid) => {
+       const m = db.matches.find(x=>x.id===mid);
+       const allPlayersInMatch = [...m.formations[0].players, ...m.formations[1].players];
+       const opts = allPlayersInMatch.map(pl => {
+         const p = db.players.find(x=>x.id===pl.playerId);
+         return `<option value="${p.id}">${p.lastName} ${p.firstName}</option>`;
+       }).join('');
+
+       const div = document.createElement('div');
+       div.className = 'event-row';
+       div.innerHTML = `
+         <input type="number" class="ev-min" placeholder="Min" inputmode="numeric">
+         <select class="ev-type"><option value="goal">Goal</option><option value="penalty">Rigore</option><option value="own">Autogol</option><option value="red">Rosso</option></select>
+         <select class="ev-team"><option value="0">${m.formations[0].teamName}</option><option value="1">${m.formations[1].teamName}</option></select>
+         <select class="ev-pl">${opts}</select>
+         <button class="btn ghost small" onclick="this.parentElement.remove()">X</button>
+       `;
+       document.getElementById('evList').appendChild(div);
+  }
+
+  window.saveMatchEdits = async (mid) => {
+       const m = db.matches.find(x=>x.id===mid);
+       
+       const nA = document.getElementById('en_tA').value;
+       const nB = document.getElementById('en_tB').value;
+       const fA = document.getElementById('el_tA').files[0];
+       const fB = document.getElementById('el_tB').files[0];
+       if(nA) m.formations[0].teamName = nA;
+       if(nB) m.formations[1].teamName = nB;
+       if(fA) m.formations[0].teamLogo = await readFlo(fA);
+       if(fB) m.formations[1].teamLogo = await readFlo(fB);
+
+       m.formations.forEach((f, idx) => {
+          f.players.forEach((pl, pi) => {
+             const r = document.getElementById(`rate_${idx}_${pi}`).value;
+             const ro = document.getElementById(`role_${idx}_${pi}`).value;
+             pl.rating = r;
+             pl.role = ro; // Update role from input
+          });
        });
-    }
 
-    // 4. ADD/EDIT MATCH (Complex)
-    window.openAddMatch = function() {
-      if(!window.adminMode) return checkAdmin();
-      // Pre-select two teams from players (just Logic)
-      const players = window.loadPlayers();
-      openModal(`
-        <div class="close-x" onclick="closeModal()">✕</div>
-        <h3>Crea Partita</h3>
-        <form id="frmMatch" class="row">
-          <input name="title" placeholder="Titolo (es. 1° Giornata)" required>
-          <input name="date" type="date" required value="${new Date().toISOString().split('T')[0]}">
-          <textarea name="notes" placeholder="Note..."></textarea>
-          
-          <div style="display:flex;gap:10px;width:100%;margin-top:10px">
-            <div style="flex:1;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px">
-              <b>Squadra A</b>
-              <input name="ta_name" value="Team A" style="margin-bottom:4px">
-              <select id="selA" multiple style="height:150px">${players.map(p=>`<option value="${p.id}">${p.firstName} ${p.lastName}</option>`).join('')}</select>
-            </div>
-            <div style="flex:1;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px">
-              <b>Squadra B</b>
-              <input name="tb_name" value="Team B" style="margin-bottom:4px">
-              <select id="selB" multiple style="height:150px">${players.map(p=>`<option value="${p.id}">${p.firstName} ${p.lastName}</option>`).join('')}</select>
-            </div>
-          </div>
-          <button class="btn" style="margin-top:16px">Crea Partita</button>
-        </form>
-      `);
-      
-      document.getElementById('frmMatch').onsubmit = async(e) => {
-        e.preventDefault();
-        const f = e.target;
-        const getSel = (id) => [...document.getElementById(id).selectedOptions].map(o=>({playerId:o.value, rating:''}));
-        
-        const m = {
-          id: 'm_'+Date.now(),
-          title: f.title.value, date: f.date.value, notes: f.notes.value,
-          formations: [
-            { teamName: f.ta_name.value, players: getSel('selA') },
-            { teamName: f.tb_name.value, players: getSel('selB') }
-          ],
-          events: []
-        };
-        const arr = window.loadMatches(); arr.push(m);
-        await window.saveMatches(arr);
-        closeModal();
-      }
-    }
+       m.mvpPlayerId = document.getElementById('mvpSel').value || null;
 
-    // 5. EDIT MATCH (Votes & Events)
-    window.editMatch = function(mid) {
-      const m = window.loadMatches().find(x=>x.id===mid);
-      const players = window.loadPlayers();
-      
-      // Helper to generate events rows
-      const renderEvents = () => {
-         return (m.events||[]).map((ev, i) => `
-           <div class="event-row">
-             <input type="number" value="${ev.minute||0}" onchange="updateEvent(${mid},${i},'minute',this.value)" placeholder="Min">
-             <select onchange="updateEvent(${mid},${i},'type',this.value)">
-               <option value="goal" ${ev.type=='goal'?'selected':''}>Gol</option>
-               <option value="assist" ${ev.type=='assist'?'selected':''}>Assist</option>
-               <option value="penalty" ${ev.type=='penalty'?'selected':''}>Rigore</option>
-               <option value="mvp" ${ev.type=='mvp'?'selected':''}>MVP</option>
-             </select>
-             <select onchange="updateEvent(${mid},${i},'teamIndex',this.value)">
-               <option value="0" ${ev.teamIndex==0?'selected':''}>Team A</option>
-               <option value="1" ${ev.teamIndex==1?'selected':''}>Team B</option>
-             </select>
-             <select onchange="updateEvent(${mid},${i},'playerId',this.value)">
-               <option value="">Giocatore...</option>
-               ${players.map(p=>`<option value="${p.id}" ${p.id==ev.playerId?'selected':''}>${p.firstName} ${p.lastName}</option>`).join('')}
-             </select>
-             <button class="btn ghost small" onclick="removeEvent(${mid},${i})">X</button>
-           </div>
-         `).join('') + `<button class="btn small" onclick="addEvent(${mid})">+ Evento</button>`;
-      };
+       const rows = document.querySelectorAll('.event-row');
+       m.events = Array.from(rows).map(r => ({
+          minute: r.querySelector('.ev-min').value,
+          type: r.querySelector('.ev-type').value,
+          teamIndex: Number(r.querySelector('.ev-team').value),
+          playerId: r.querySelector('.ev-pl').value
+       }));
 
-      // Helper for Players Votes
-      const renderTeam = (idx) => {
-        return m.formations[idx].players.map((pl, pi) => {
-           const p = players.find(x=>x.id===pl.playerId);
-           if(!p) return '';
-           return `<div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px">
-             <span>${p.firstName} ${p.lastName}</span>
-             <input type="number" style="width:50px;padding:4px" placeholder="Voto" value="${pl.rating||''}" onchange="updateRating(${mid},${idx},${pi},this.value)">
-           </div>`
-        }).join('');
-      };
+       saveDB(); window.closeModal(); renderAll();
+  };
 
-      openModal(`
-        <div class="close-x" onclick="closeModal()">✕</div>
-        <h3>Modifica: ${m.title}</h3>
-        <div style="display:flex;gap:10px;margin-bottom:10px">
-           <div style="flex:1;background:rgba(255,255,255,0.02);padding:10px">
-             <b>${m.formations[0].teamName}</b>
-             ${renderTeam(0)}
-           </div>
-           <div style="flex:1;background:rgba(255,255,255,0.02);padding:10px">
-             <b>${m.formations[1].teamName}</b>
-             ${renderTeam(1)}
-           </div>
-        </div>
-        <h4 style="margin:10px 0">Eventi</h4>
-        <div id="eventsList">${renderEvents()}</div>
-        <div style="margin-top:20px;text-align:right">
-           <button class="btn ghost" onclick="deleteMatch('${mid}')">Elimina Partita</button>
-           <button class="btn" onclick="closeModal()">Fatto</button>
-        </div>
-      `);
-    }
+  window.deleteMatch = (mid) => {
+       if(!confirm("Sicuro di voler eliminare questa partita definitivamente?")) return;
+       db.matches = db.matches.filter(x=>x.id!==mid);
+       saveDB(); 
+       // Close modal completely
+       document.getElementById('modal').style.display='none';
+       renderAll();
+  }
 
-    // UPDATE HELPERS (Global for onclick)
-    window.updateRating = async (mid, teamIdx, plIdx, val) => {
-      const matches = window.loadMatches();
-      const m = matches.find(x=>x.id===mid);
-      m.formations[teamIdx].players[plIdx].rating = val;
-      await window.saveMatches(matches);
-    }
-    
-    window.addEvent = async (mid) => {
-      const matches = window.loadMatches();
-      const m = matches.find(x=>x.id===mid);
-      if(!m.events) m.events = [];
-      m.events.push({ type:'goal', minute:1, teamIndex:0, playerId:'' });
-      await window.saveMatches(matches);
-      reSyncMvp(); // Sync MVP counts
-      editMatch(mid); // Re-render modal
-    }
-    
-    window.updateEvent = async (mid, evIdx, field, val) => {
-      const matches = window.loadMatches();
-      const m = matches.find(x=>x.id===mid);
-      m.events[evIdx][field] = val;
-      if(field === 'teamIndex') m.events[evIdx].teamIndex = Number(val);
-      await window.saveMatches(matches);
-      reSyncMvp();
-    }
-    
-    window.removeEvent = async (mid, evIdx) => {
-      const matches = window.loadMatches();
-      const m = matches.find(x=>x.id===mid);
-      m.events.splice(evIdx, 1);
-      await window.saveMatches(matches);
-      reSyncMvp();
-      editMatch(mid);
-    }
+  window.app = { showView: (v) => {
+       document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+       document.querySelector(`[data-view="${v}"]`).classList.add('active');
+       document.querySelectorAll('.view').forEach(e=>e.style.display='none');
+       document.getElementById('view'+v.charAt(0).toUpperCase()+v.slice(1)).style.display='block';
+       if(v==='rankings') window.renderRankings();
+  }, renderPlayers: window.renderPlayers, triggerImport: window.triggerImport };
 
-    window.deleteMatch = async(mid) => {
-      if(!confirm('Eliminare?')) return;
-      const matches = window.loadMatches().filter(x=>x.id!==mid);
-      await window.saveMatches(matches);
-      reSyncMvp();
-      closeModal();
-    }
-    
-    // 6. SHOW MATCH
-    window.showMatch = function(mid) {
-      const m = window.loadMatches().find(x=>x.id===mid);
-      const players = window.loadPlayers();
-      const getP = (id) => { const p=players.find(x=>x.id===id); return p?p.lastName:'?'; };
-      
-      const eventsHtml = (m.events||[]).sort((a,b)=>a.minute-b.minute).map(e => `
-        <div style="padding:4px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:13px">
-           <b style="color:var(--accent)">${e.minute}'</b> ${e.type.toUpperCase()} • ${getP(e.playerId)} ${e.teamIndex!=null?`(${m.formations[e.teamIndex].teamName})`:''}
-        </div>
-      `).join('');
+  // BOOT
+  loadDB();
+  function renderAll(){
+    renderHeader();
+    window.renderPlayers();
+    window.renderMatches();
+    window.renderCalendar();
+    window.renderRankings();
+    window.renderAdmin();
+  }
+  renderAll();
 
-      openModal(`
-        <div class="close-x" onclick="closeModal()">✕</div>
-        <h3 style="text-align:center">${m.title}</h3>
-        <h1 style="text-align:center;color:var(--accent);font-size:32px;margin:10px 0">${computeScore(m)}</h1>
-        <div style="text-align:center;margin-bottom:20px" class="muted-small">${new Date(m.date).toLocaleDateString()}</div>
-        
-        <div style="display:flex;gap:20px">
-           <div style="flex:1">
-             <b>${m.formations[0].teamName}</b>
-             ${m.formations[0].players.map(pl=>`<div class="muted-small">${getP(pl.playerId)} <span style="float:right;color:gold">${pl.rating||''}</span></div>`).join('')}
-           </div>
-           <div style="flex:1">
-             <b>${m.formations[1].teamName}</b>
-             ${m.formations[1].players.map(pl=>`<div class="muted-small">${getP(pl.playerId)} <span style="float:right;color:gold">${pl.rating||''}</span></div>`).join('')}
-           </div>
-        </div>
-        <hr style="border:0;border-top:1px solid rgba(255,255,255,0.1);margin:20px 0">
-        <h4>Cronaca</h4>
-        ${eventsHtml||'<div class="muted-small">Nessun evento</div>'}
-      `);
-    }
-
-    // --- SYNC LOGIC: Recalculate MVP count on players based on Match Events ---
-    async function reSyncMvp() {
-      const players = window.loadPlayers();
-      const matches = window.loadMatches();
-      // Reset
-      players.forEach(p => p.mvpCount = 0);
-      // Count
-      matches.forEach(m => {
-        (m.events||[]).forEach(e => {
-          if(e.type === 'mvp' && e.playerId) {
-            const p = players.find(x=>x.id===e.playerId);
-            if(p) p.mvpCount++;
-          }
-        });
-      });
-      await window.savePlayers(players);
-    }
-
-    // --- ADMIN TOOLS ---
-    window.editLeagueMeta = function() {
-       const m = window.getMeta();
-       const newT = prompt("Titolo Lega:", m.leagueTitle);
-       const newL = prompt("URL Logo (lascia vuoto per nessuno):", m.leagueLogo);
-       if(newT) window.saveMeta({ leagueTitle:newT, leagueLogo:newL });
-    }
-    
-    window.changePin = function() {
-       const p = prompt("Nuovo PIN:");
-       if(p) window.saveAdmin({ pin:p });
-    }
-
-    window.exportJSON = function() {
-      const data = { players: window.loadPlayers(), matches: window.loadMatches(), meta: window.getMeta() };
-      const blob = new Blob([JSON.stringify(data, null, 2)], {type : 'application/json'});
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'salesian_backup.json';
-      a.click();
-    }
-
-    // CSV Export
-    window.exportCSV = function() {
-      const players = window.loadPlayers();
-      let csv = "ID,Nome,Cognome,Goal,Assist,Partite,MediaVoto,MVP\n";
-      players.forEach(p => {
-        const s = computeStats(p.id);
-        csv += `${p.id},${p.firstName},${p.lastName},${s.goals},${s.assists},${s.played},${s.avgVote},${p.mvpCount||0}\n`;
-      });
-      const blob = new Blob([csv], {type:'text/csv'});
-      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'stats.csv'; a.click();
-    }
-    
-    // Import
-    document.getElementById('importBtn').onclick = () => {
-      if(!window.adminMode && !confirm("Attenzione: serve PIN admin dopo il click. Continuare?")) return;
-      if(!window.adminMode) { const pin = prompt("PIN:"); if(pin !== window.getAdmin().pin) return alert("PIN Errato"); }
-      
-      const inp = document.createElement('input'); inp.type='file';
-      inp.onchange = e => {
-        const f = e.target.files[0];
-        const r = new FileReader();
-        r.onload = async (ev) => {
-          try {
-             const d = JSON.parse(ev.target.result);
-             if(d.players) await window.savePlayers(d.players);
-             if(d.matches) await window.saveMatches(d.matches);
-             if(d.meta) await window.saveMeta(d.meta);
-             alert("Import riuscito!");
-          } catch(err){ alert("Errore file"); }
-        };
-        r.readAsText(f);
-      };
-      inp.click();
-    }
-
-    // Helper: File to Base64
-    function readFile(file) {
-      return new Promise((resolve) => {
-        if(!file) resolve('');
-        const r = new FileReader();
-        r.onload = e => resolve(e.target.result);
-        r.readAsDataURL(file);
-      });
-    }
-
-    // Buttons
-    document.getElementById('addPlayerBtnTop').onclick = window.openAddPlayer;
-    document.getElementById('newMatchBtn').onclick = window.openAddMatch;
-
-  </script>
+});
+</script>
 </body>
 </html>
